@@ -690,7 +690,7 @@
       <div class="br-pagebody">
         <div class="br-section-wrapper">
           <h6 class="tx-gray-800 tx-uppercase tx-bold tx-14 mg-b-10">Mantenimiento de Productos</h6>
-          <p class="mg-b-25 mg-lg-b-50">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+          
 
           <div class="table-wrapper">
             <table id="datatable1" class="table display responsive nowrap">
