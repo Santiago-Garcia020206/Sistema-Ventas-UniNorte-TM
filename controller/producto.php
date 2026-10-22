@@ -15,7 +15,7 @@ switch ($_GET["op"]) {
         foreach($datos as $row){
             $sub_array = array();
 
-            $sub_array[] = $row["prod_nom"];
+            $sub_array[] = $row["prod_nombre"];
             $sub_array[] = '<button type="button" onClick="editar('.$row["prod_id"].');" id="'.$row["prod_id"].'" class="btn btn-outline-primary btn-icon"><div class="fa fa-edit"></div></button>';
             $sub_array[] = '<button type="button" onClick="eliminar('.$row["prod_id"].');" id="'.$row["prod_id"].'" class="btn btn-outline-danger btn-icon"><div class="fa fa-trash"></div></button>';
 
@@ -34,14 +34,20 @@ switch ($_GET["op"]) {
     break;
 
     case "guardaryeditar":
-        $datos=$producto->get_producto_x_id($_POST["prod_id"]);
-        if(empty($_POST["prod_id"])){
-            if(is_array($datos)==true and count($datos)==0){
-                $producto->insert_product($_POST["prod_nom"]);
-            }
-        }else{
-            $producto->update_product($_POST["prod_id"],$_POST["prod_nom"]);
+        header("Content-Type: application/json; charset=utf-8");
+        $prod_nom = trim($_POST["prod_nom"] ?? "");
+        if ($prod_nom === "") {
+            http_response_code(400);
+            echo json_encode(array("success" => false, "message" => "El nombre del producto es obligatorio."));
+            break;
         }
+
+        if (empty($_POST["prod_id"])) {
+            $producto->insert_producto($prod_nom);
+        } else {
+            $producto->update_producto($_POST["prod_id"], $prod_nom);
+        }
+        echo json_encode(array("success" => true));
         break;
 
     case "mostrar":
@@ -49,7 +55,7 @@ switch ($_GET["op"]) {
         if(is_array($datos)==true and count($datos)>0){
             foreach($datos as $row){
                 $output["prod_id"] = $row["prod_id"];
-                $output["prod_nom"] = $row["prod_nom"];
+                $output["prod_nom"] = $row["prod_nombre"];
             }
         }
         break;

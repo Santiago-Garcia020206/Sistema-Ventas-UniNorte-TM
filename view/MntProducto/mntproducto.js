@@ -1,6 +1,11 @@
-// function init(){
+var modalTrigger = null;
 
-// }
+ function init(){
+    $("#producto_form").on("submit",function(e){
+        guardaryeditar(e);
+    });
+ }
+ init();
 
 $(document).ready(function(){
 
@@ -62,18 +67,52 @@ $(document).ready(function(){
 
 });
 
+function guardaryeditar(e){
+    e.preventDefault();
+    var formData = new FormData($("#producto_form")[0]);
+    $.ajax({
+        url: "../../controller/producto.php?op=guardaryeditar",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(response){
+            if (!response.success) {
+                window.alert(response.message || "No se pudo guardar el producto.");
+                return;
+            }
+            $('#producto_form')[0].reset();
+            $("#modalmantenimiento").modal('hide');
+            $('#producto_data').DataTable().ajax.reload();
+        },
+        error: function(xhr){
+            var message = xhr.responseJSON && xhr.responseJSON.message;
+            window.alert(message || "No se pudo guardar el producto. Verifica los datos e inténtalo de nuevo.");
+        }
+    });
+}
 
 $(document).on("click", "#btnNuevo", function(){
-    //alert("EVENTO DETECTADO EN EL BOTON");
+    modalTrigger = this;
+    $("#producto_form")[0].reset();
     $("#modalmantenimiento").modal("show");
 })
 
+$("#modalmantenimiento").on("hide.bs.modal", function(){
+    if (this.contains(document.activeElement)) {
+        document.activeElement.blur();
+    }
+}).on("hidden.bs.modal", function(){
+    if (modalTrigger && document.contains(modalTrigger)) {
+        modalTrigger.focus();
+    }
+});
+
 function eliminar(prod_id){
-    // alert("FUNCION ELIMINAR ID: "+prod_id)
+    alert("FUNCION ELIMINAR ID: "+prod_id)
     $.post("../../controller/producto.php?op=eliminar", {prod_id:prod_id}, function(data){
 
     })
 
 }
-
-// init();

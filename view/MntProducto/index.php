@@ -713,19 +713,7 @@
                 </tr>
               </thead>
 
-              <tbody>
-                <tr>
-                  <td>Gaseosa Coca Cola 2L</td>
-                  <td><button class="btn btn-primary">Editar</button></td>
-                  <td><button class="btn btn-danger">Eliminar</button></td>
-                </tr>
-
-                <tr>
-                  <td>Agua en Botella 1L</td>
-                  <td><button type="button" class="btn btn-outline-primary btn-icon"> <div class="fa fa-edit"></div> </button></td>
-                 <td><button type="button" class="btn btn-outline-danger btn-icon"> <div class="fa fa-trash"></div> </button></td>
-                </tr>
-              </tbody>
+              <tbody></tbody>
 
             </table>
 
@@ -751,7 +739,8 @@
     <script src="../../public/lib/datatables-responsive/dataTables.responsive.js"></script>
 
     <script src="../../public/js/bracket.js"></script>
-    <script src="mntproducto.js"></script>
+    <script src="mntproducto.js?v=<?php echo filemtime(__DIR__ . '/mntproducto.js'); ?>"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     
   </body>
 </html>

@@ -98,7 +98,7 @@ class Producto extends Conectar
 
         // Consulta SQL para insertar un producto
         $sql = "INSERT INTO tm_producto
-                (prod_id, prod_nom, fech_crea, fech_modi, fech_elim, est)
+                (prod_id, prod_nombre, fech_crea, fech_modi, fech_elim, est)
                 VALUES (NULL, ?, now(), NULL, NULL, 1)";
 
         // Prepara la consulta
@@ -119,9 +119,9 @@ class Producto extends Conectar
     public function update_producto($prod_id, $prod_nom){
         $conectar=parent::conexion();
         parent::set_names();
-        $sql="UPDATE tb_producto
+        $sql="UPDATE tm_producto
             SET
-                prod_nom=?,
+                prod_nombre=?,
                 fech_modi=now()
             WHERE
                 prod_id = ?;";
